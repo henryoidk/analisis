@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ventas • Vendedor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../estilos_otro_proyecto/dashboard.css" />
+  <link rel="stylesheet" href="../estilos_otro_proyecto/modular-components.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">Ventas<span>Vendor</span></div>
+      <nav class="menu">
+        <a class="item active" data-section="resumen"><i class="fa-solid fa-house"></i>Resumen</a>
+        <div class="spacer"></div>
+        <a class="item" href="login.html"><i class="fa-solid fa-right-from-bracket"></i>Salir</a>
+      </nav>
+      <div class="foot">Panel personal</div>
+    </aside>
+
+    <main class="content vendor">
+      <header class="topbar">
+        <div class="periodo">Resumen personal • OCTUBRE 2025 • Semana S4</div>
+        <div class="actions"></div>
+      </header>
+
+      <div id="section-resumen">
+        <section class="kpi-grid">
+          <div class="card metric">
+            <div class="kpi-title">Semana actual</div>
+            <div class="kpi-value">S4</div>
+            <div class="kpi-sub">Semana calendario</div>
+          </div>
+          <div class="card metric">
+            <div class="kpi-title">Meta mensual</div>
+            <div class="kpi-value">USD 50,000</div>
+            <div class="kpi-sub">Objetivo</div>
+          </div>
+          <div class="card metric">
+            <div class="kpi-title">Total personal</div>
+            <div class="kpi-value">USD 51,000</div>
+            <div class="kpi-sub">Ventas del mes</div>
+          </div>
+        </section>
+
+        <section class="card v-table">
+          <div class="card-title"><i class="fa-solid fa-clipboard-check"></i> Resumen personal de ventas</div>
+          <div class="stats">
+            <div class="stats-row">
+              <span class="label">S1</span>
+              <span class="value">USD 12,000</span>
+            </div>
+            <div class="stats-row">
+              <span class="label">S2</span>
+              <span class="value">USD 14,000</span>
+            </div>
+            <div class="stats-row">
+              <span class="label">S3</span>
+              <span class="value">USD 10,000</span>
+            </div>
+            <div class="stats-row">
+              <span class="label">S4</span>
+              <span class="value">USD 15,000</span>
+            </div>
+            <div class="divider"></div>
+            <div class="stats-row total">
+              <span class="label">TOTAL</span>
+              <span class="value">USD 51,000</span>
+            </div>
+            <div class="stats-row meta">
+              <span class="label">Meta mensual</span>
+              <span class="value">USD 50,000</span>
+              <span class="badge ok"><i class="fa-solid fa-check"></i> Logro 102%</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-title"><i class="fa-solid fa-chart-bar"></i> Evolución semanal</div>
+          <div class="hbars">
+            <div class="hbar">
+              <span class="hlabel">S1</span>
+              <div class="htrack"><div class="hfill" style="width:80%"></div></div>
+              <span class="hvalue">12,000</span>
+            </div>
+            <div class="hbar">
+              <span class="hlabel">S2</span>
+              <div class="htrack"><div class="hfill" style="width:93%"></div></div>
+              <span class="hvalue">14,000</span>
+            </div>
+            <div class="hbar">
+              <span class="hlabel">S3</span>
+              <div class="htrack"><div class="hfill" style="width:67%"></div></div>
+              <span class="hvalue">10,000</span>
+            </div>
+            <div class="hbar">
+              <span class="hlabel">S4</span>
+              <div class="htrack"><div class="hfill" style="width:100%"></div></div>
+              <span class="hvalue">15,000</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <style>
+    /* Overrides específicos del panel de vendedor (sin JS) */
+    .content.vendor{ max-width: 1100px; margin: 0 auto; padding: 24px 28px; }
+    .kpi-grid{ display:grid; grid-template-columns: repeat(3, minmax(260px,1fr)); gap:16px; margin-bottom:18px; }
+    @media (max-width: 1100px){ .kpi-grid{ grid-template-columns: repeat(2, minmax(260px,1fr)); } }
+    @media (max-width: 740px){ .kpi-grid{ grid-template-columns: 1fr; } }
+    .v-table .stats-row{ border-radius:8px; }
+    .v-table .stats-row .value{ font-variant-numeric: tabular-nums; }
+    .hbars{ margin-top:6px; }
+  </style>
+</body>
+</html>

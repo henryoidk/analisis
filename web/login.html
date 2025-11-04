@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Informe semanal de ventas</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="card">
+    <div class="logo" aria-hidden="true">🎓</div>
+    <h1>Informe semanal de ventas</h1>
+
+    <form id="loginForm" autocomplete="on">
+      <label for="username">Usuario</label>
+      <div class="input">
+        <span>👤</span>
+        <input id="username" name="username" type="text" placeholder="Ingresa tu usuario" required />
+      </div>
+
+      <label for="password">Contraseña</label>
+      <div class="input">
+        <span>🔒</span>
+        <input id="password" name="password" type="password" placeholder="Ingresa tu contraseña" required />
+        <button id="toggle" type="button" class="eye" title="Mostrar/Ocultar" aria-label="Mostrar u ocultar contraseña">👁️</button>
+      </div>
+
+      <button class="btn" type="submit">➜ Iniciar Sesión</button>
+      <div class="muted"><a class="link" href="#">¿Olvidaste tu contraseña?</a></div>
+    </form>
+  </div>
+  <div class="footer">Módulo informe ventas</div>
+
+  <script src="app.js"></script>
+  <!-- Ajusta el endpoint /api/login en app.js para integrar tu backend que llama a auth.sp_Login -->
+</body>
+</html>
+

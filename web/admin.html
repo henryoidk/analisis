@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VentasAdmin • Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../estilos_otro_proyecto/dashboard.css" />
+  <link rel="stylesheet" href="../estilos_otro_proyecto/modular-components.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">Ventas<span>Admin</span></div>
+      <nav class="menu">
+        <a class="item active" data-section="resumen"><i class="fa-solid fa-house"></i>Resumen</a>
+        <a class="item" data-section="ajustes"><i class="fa-solid fa-gear"></i>Ajustes</a>
+        <div class="spacer"></div>
+        <a class="item" href="login.html"><i class="fa-solid fa-right-from-bracket"></i>Salir</a>
+      </nav>
+      <div class="foot">Módulo informe ventas</div>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div class="periodo" id="periodo">Resumen general de ventas • OCTUBRE 2025 • Semana S4</div>
+        <div class="actions">
+          <button id="themeToggle" class="btn ghost floating-toggle" title="Cambiar tema"><i class="fa-solid fa-moon"></i><span>Modo</span></button>
+          <button id="btnReport" class="btn primary"><i class="fa-solid fa-chart-pie"></i>Generar reporte</button>
+        </div>
+      </header>
+
+      <!-- RESUMEN -->
+      <div id="section-resumen">
+        <section class="grid">
+          <div class="card metric">
+            <div class="kpi-title">Total mensual</div>
+            <div class="kpi-value">USD 160,000</div>
+            <div class="kpi-sub">Ventas del mes</div>
+          </div>
+          <div class="card metric">
+            <div class="kpi-title">Semana actual</div>
+            <div class="kpi-value">S4</div>
+            <div class="kpi-sub">Semana calendario</div>
+          </div>
+          <div class="card metric">
+            <div class="kpi-title">Promedio por vendedor</div>
+            <div class="kpi-value">USD 11,200</div>
+            <div class="kpi-sub">Media mensual</div>
+          </div>
+        </section>
+
+        <section class="card table">
+          <div class="card-title"><i class="fa-solid fa-briefcase"></i> Desempeño por vendedor</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Vendedor</th>
+                  <th>S1</th>
+                  <th>S2</th>
+                  <th>S3</th>
+                  <th>S4</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Ana Pérez</td><td class="num">12,000</td><td class="num">14,000</td><td class="num">10,000</td><td class="num">15,000</td><td class="num">51,000</td></tr>
+                <tr><td>Juan Gómez</td><td class="num">10,000</td><td class="num">11,000</td><td class="num">9,000</td><td class="num">12,000</td><td class="num">42,000</td></tr>
+                <tr><td>Luis Soto</td><td class="num">8,000</td><td class="num">9,000</td><td class="num">8,000</td><td class="num">10,000</td><td class="num">35,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="card chart-card">
+          <div class="card-title">Evolución semanal (total)</div>
+          <div class="chart-wrap">
+            <!-- Simple SVG sin dependencias -->
+            <svg id="chartSvg" viewBox="0 0 900 360" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"></svg>
+          </div>
+        </section>
+      </div>
+
+      <!-- AJUSTES (incluye Vendedores + Periodos) -->
+      <div id="section-ajustes" class="hidden">
+        <section class="card table">
+          <div class="card-title"><i class="fa-solid fa-eye"></i> Permisos por usuario</div>
+          <div class="users-controls">
+            <input id="userSearch" class="input" type="text" placeholder="Buscar usuario..." />
+            <div class="spacer"></div>
+          </div>
+          <div class="table-wrap">
+            <table class="table-vendedores" id="usuariosTable">
+              <thead>
+                <tr>
+                  <th>Usuario</th>
+                  <th>Rol</th>
+                  <th>Permisos</th>
+                </tr>
+              </thead>
+              <tbody id="usuariosBody">
+                <tr><td colspan="3" class="muted">Cargando…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-actions">
+            <button id="saveAll" class="btn primary"><i class="fa-solid fa-floppy-disk"></i>Guardar cambios</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-title"><i class="fa-solid fa-calendar-week"></i> Meses visibles (año en curso)</div>
+          <div id="monthsGrid" class="months-grid"></div>
+          <div class="table-actions">
+            <button id="btnSavePeriods" class="btn primary"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Theme (light/dark) toggle — UI only
+    (function(){
+      const root = document.documentElement;
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved || (prefersDark ? 'dark' : 'light');
+      root.setAttribute('data-theme', initial);
+      const btn = document.getElementById('themeToggle');
+      const setIcon = () => {
+        const isDark = root.getAttribute('data-theme') === 'dark';
+        btn.querySelector('i').className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+      };
+      setIcon();
+      btn.addEventListener('click', ()=>{
+        const cur = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', cur);
+        localStorage.setItem('theme', cur);
+        setIcon();
+      });
+    })();
+
+    // UI only — no fetch, no external libs
+    const menuItems = document.querySelectorAll('.menu .item[data-section]');
+    const sections = {
+      resumen: document.getElementById('section-resumen'),
+      ajustes: document.getElementById('section-ajustes'),
+    };
+    const reportBtn = document.getElementById('btnReport');
+
+    function setActive(section){
+      menuItems.forEach(el=>el.classList.toggle('active', el.dataset.section===section));
+      Object.keys(sections).forEach(k=>sections[k].classList.toggle('hidden', k!==section));
+      if (reportBtn) reportBtn.style.display = section === 'resumen' ? '' : 'none';
+    }
+    menuItems.forEach(el=>el.addEventListener('click',()=>setActive(el.dataset.section)));
+    setActive('resumen');
+
+    // Simple SVG chart
+    (function(){
+      const svg = document.getElementById('chartSvg');
+      const weeks = ['S1','S2','S3','S4'];
+      const values = [34000, 51000, 34000, 37000];
+      const W=900, H=360, pad={t:24,r:24,b:40,l:48};
+      const innerW=W-pad.l-pad.r, innerH=H-pad.t-pad.b;
+      const max=Math.max(...values,1);
+      const barW=innerW/weeks.length*0.6, gap=innerW/weeks.length*0.4;
+      const x = i => pad.l + i*(barW+gap)+gap/2;
+      const y = v => pad.t + innerH - (v/max)*innerH;
+      svg.innerHTML='';
+      // grid
+      for(let i=0;i<=4;i++){
+        const yy=pad.t+(innerH/4)*i;
+        svg.insertAdjacentHTML('beforeend',`<line x1="${pad.l}" y1="${yy}" x2="${W-pad.r}" y2="${yy}" stroke="rgba(255,255,255,.06)"/>`);
+      }
+      const colors=['#60a5fa','#34d399','#fbbf24','#f472b6'];
+      values.forEach((v,i)=>{
+        const bx=x(i), by=y(v), bh=pad.t+innerH-by, c=colors[i%colors.length];
+        svg.insertAdjacentHTML('beforeend',`<rect x="${bx}" y="${by}" width="${barW}" height="${bh}" rx="10" fill="${c}99" stroke="${c}" stroke-width="1.5"/>`);
+        svg.insertAdjacentHTML('beforeend',`<text x="${bx+barW/2}" y="${by-8}" text-anchor="middle" fill="#9aa3b2" font-size="12">${v.toLocaleString('es-PE')}</text>`);
+      });
+      weeks.forEach((w,i)=>svg.insertAdjacentHTML('beforeend',`<text x="${x(i)+barW/2}" y="${H-12}" text-anchor="middle" fill="#9aa3b2" font-size="13">${w}</text>`));
+    })();
+
+    // Vendedores (UI local)
+    (function(){
+      const users = [
+        { id:1, username:'henryoo', role:'Administrador', visibility:'todos' },
+        { id:2, username:'harold',  role:'Vendedor',      visibility:'personal' },
+        { id:3, username:'luis',    role:'Vendedor',      visibility:'personal' },
+      ];
+      const tbody = document.getElementById('usuariosBody');
+      const search = document.getElementById('userSearch');
+      const saveAll = document.getElementById('saveAll');
+      let model = users.map(u=>({...u, pending:null}));
+
+      function rowTemplate(u){
+        const mode = (u.visibility==='todos'?'todos':'personal');
+        return `
+          <tr>
+            <td>${u.username}</td>
+            <td>${u.role}</td>
+            <td>
+              <select class="select vis-select" data-id="${u.id}">
+                <option value="personal" ${mode==='personal'?'selected':''}>Datos personales</option>
+                <option value="todos" ${mode==='todos'?'selected':''}>Todos los vendedores</option>
+              </select>
+            </td>
+          </tr>`;
+      }
+
+      function render(items){
+        if (!items.length){ tbody.innerHTML = '<tr><td colspan="3" class="muted">Sin resultados</td></tr>'; return; }
+        tbody.innerHTML = items.map(rowTemplate).join('');
+        tbody.querySelectorAll('.vis-select').forEach(sel => {
+          sel.addEventListener('change', () => {
+            const id = Number(sel.getAttribute('data-id'));
+            const u = model.find(x=>x.id===id);
+            if (!u) return;
+            u.pending = sel.value;
+          });
+        });
+      }
+
+      render(model);
+      search.addEventListener('input',()=>{
+        const q = search.value.toLowerCase();
+        render(model.filter(u=>u.username.toLowerCase().includes(q) || (u.role||'').toLowerCase().includes(q)));
+      });
+      saveAll.addEventListener('click',()=>{
+        model.forEach(u=>{ if(u.pending){ u.visibility=u.pending; u.pending=null; } });
+        alert('Cambios guardados (UI)');
+        render(model);
+      });
+    })();
+
+    // Periodos (chips locales)
+    (function(){
+      const grid = document.getElementById('monthsGrid');
+      const btn = document.getElementById('btnSavePeriods');
+      const year = new Date().getFullYear();
+      const names = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+      const months = Array.from({length:12}, (_,i)=>({ ym:`${year}-${String(i+1).padStart(2,'0')}`, label:`${names[i]} ${year}`, active:false }));
+      const current = new Date().getMonth();
+      months[current].active = true;
+      function draw(){
+        grid.innerHTML = months.map(m=>`<button class="month ${m.active?'active':''}" data-ym="${m.ym}">${m.label} <span>${m.active?'Visible':'Oculto'}</span></button>`).join('');
+        grid.querySelectorAll('.month').forEach(b=>b.addEventListener('click',()=>{
+          const ym=b.getAttribute('data-ym');
+          const m=months.find(x=>x.ym===ym);
+          m.active=!m.active;
+          draw();
+        }));
+      }
+      draw();
+      btn.addEventListener('click',()=>{ const sel=months.filter(m=>m.active).map(m=>m.ym); alert('Meses visibles: '+sel.join(', ')); });
+    })();
+  </script>
+</body>
+</html>
+
