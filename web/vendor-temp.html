@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ventas • Vendedor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../estilos_otro_proyecto/dashboard.css" />
+  <link rel="stylesheet" href="../estilos_otro_proyecto/modular-components.css" />
+  <link rel="stylesheet" href="vendor-new.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">Ventas<span>Vendor</span></div>
+      <nav class="menu">
+        <a class="item active" data-section="resumen"><i class="fa-solid fa-house"></i>Resumen</a>
+        <div class="spacer"></div>
+        <a class="item" href="login.html"><i class="fa-solid fa-right-from-bracket"></i>Salir</a>
+      </nav>
+      <div class="foot">Panel personal</div>
+    </aside>
+
+    <main class="content vendor">
+      <header class="topbar">
+        <div class="periodo">Resumen personal • OCTUBRE 2025 • Semana S4</div>
+        <div class="actions"></div>
+      </header>
+
+      <div id="section-resumen">
+        <div class="metrics-row">
+          <div class="card metric">
+            <div class="kpi-title">Semana actual</div>
+            <div class="kpi-value">S4</div>
+            <div class="kpi-sub">Semana calendario</div>
+          </div>
+          <div class="card metric">
+            <div class="kpi-title">Total personal</div>
+            <div class="kpi-value">USD 51,000</div>
+            <div class="kpi-sub">Ventas del mes</div>
+          </div>
+        </div>
+
+        <div class="content-row">
+          <section class="card v-table">
+            <div class="card-title"><i class="fa-solid fa-clipboard-check"></i> Resumen personal de ventas</div>
+            <div class="stats">
+              <div class="stats-row">
+                <span class="label">S1</span>
+                <span class="value">USD 12,000</span>
+              </div>
+              <div class="stats-row">
+                <span class="label">S2</span>
+                <span class="value">USD 14,000</span>
+              </div>
+              <div class="stats-row">
+                <span class="label">S3</span>
+                <span class="value">USD 10,000</span>
+              </div>
+              <div class="stats-row">
+                <span class="label">S4</span>
+                <span class="value">USD 15,000</span>
+              </div>
+              <div class="divider"></div>
+              <div class="stats-row total">
+                <span class="label">TOTAL</span>
+                <span class="value">USD 51,000</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="card chart-section">
+            <div class="card-title"><i class="fa-solid fa-chart-bar"></i> Evolución semanal</div>
+            <div class="chart-container">
+              <div class="chart-bars">
+                <div class="bar" style="height: 80%">
+                  <div class="bar-label">S1</div>
+                  <div class="bar-value">12,000</div>
+                </div>
+                <div class="bar" style="height: 93%">
+                  <div class="bar-label">S2</div>
+                  <div class="bar-value">14,000</div>
+                </div>
+                <div class="bar" style="height: 67%">
+                  <div class="bar-label">S3</div>
+                  <div class="bar-value">10,000</div>
+                </div>
+                <div class="bar" style="height: 100%">
+                  <div class="bar-label">S4</div>
+                  <div class="bar-value">15,000</div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

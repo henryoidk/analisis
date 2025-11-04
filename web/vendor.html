@@ -11,6 +11,242 @@
   <link rel="stylesheet" href="../estilos_otro_proyecto/dashboard.css" />
   <link rel="stylesheet" href="../estilos_otro_proyecto/modular-components.css" />
   <link rel="stylesheet" href="admin.css" />
+  <style>
+    /* Layout principal */
+    .content.vendor {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* Fila de métricas */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card.metric {
+      background: #1e2332;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      border-radius: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card.metric:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .kpi-title {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-bottom: 4px;
+    }
+
+    .kpi-sub {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    /* Contenido en fila */
+    .content-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 24px;
+    }
+
+    /* Tabla y gráfica */
+    .v-table,
+    .chart-section {
+      background: #1e2332;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      color: #e2e8f0;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title i {
+      color: #3b82f6;
+    }
+
+    .stats {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .stats-row:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(4px);
+    }
+
+    .stats-row .label {
+      color: #94a3b8;
+      font-size: 0.875rem;
+    }
+
+    .stats-row .value {
+      color: #e2e8f0;
+      font-variant-numeric: tabular-nums;
+      font-weight: 500;
+    }
+
+    .stats-row.total {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      margin-top: 12px;
+    }
+
+    .stats-row.total .label,
+    .stats-row.total .value {
+      color: #3b82f6;
+      font-weight: 600;
+    }
+
+    /* Gráfica */
+    .chart-container {
+      height: 260px;
+      margin-top: 16px;
+    }
+
+    .chart-bars {
+      height: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      padding: 0 20px;
+      gap: 16px;
+    }
+
+    .bar {
+      flex: 1;
+      max-width: 60px;
+      background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 6px 6px 0 0;
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .bar:hover {
+      transform: translateY(-4px);
+    }
+
+    .bar-label {
+      position: absolute;
+      bottom: -24px;
+      width: 100%;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.75rem;
+    }
+
+    .bar-value {
+      position: absolute;
+      top: -24px;
+      width: 100%;
+      text-align: center;
+      color: #e2e8f0;
+      font-variant-numeric: tabular-nums;
+      font-size: 0.875rem;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .bar:hover .bar-value {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mejoras de la interfaz */
+    .sidebar {
+      background: #1e2332;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .brand {
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .brand span {
+      color: #3b82f6;
+      margin-left: 4px;
+    }
+
+    .menu .item {
+      color: #94a3b8;
+      transition: color 0.2s, background-color 0.2s;
+      border-radius: 8px;
+      margin: 4px 0;
+    }
+
+    .menu .item:hover,
+    .menu .item.active {
+      color: #e2e8f0;
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .menu .item i {
+      color: #3b82f6;
+    }
+
+    .topbar {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 16px 24px;
+    }
+
+    .periodo {
+      font-size: 0.875rem;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      .metrics-row,
+      .content-row {
+        grid-template-columns: 1fr;
+      }
+
+      .content.vendor {
+        padding: 16px;
+      }
+
+      .card.metric,
+      .v-table,
+      .chart-section {
+        padding: 16px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="layout">
@@ -31,94 +267,120 @@
       </header>
 
       <div id="section-resumen">
-        <section class="kpi-grid">
+        <div class="metrics-row">
           <div class="card metric">
             <div class="kpi-title">Semana actual</div>
             <div class="kpi-value">S4</div>
             <div class="kpi-sub">Semana calendario</div>
           </div>
           <div class="card metric">
-            <div class="kpi-title">Meta mensual</div>
-            <div class="kpi-value">USD 50,000</div>
-            <div class="kpi-sub">Objetivo</div>
-          </div>
-          <div class="card metric">
             <div class="kpi-title">Total personal</div>
             <div class="kpi-value">USD 51,000</div>
             <div class="kpi-sub">Ventas del mes</div>
           </div>
-        </section>
+        </div>
 
-        <section class="card v-table">
-          <div class="card-title"><i class="fa-solid fa-clipboard-check"></i> Resumen personal de ventas</div>
-          <div class="stats">
-            <div class="stats-row">
-              <span class="label">S1</span>
-              <span class="value">USD 12,000</span>
+        <div class="content-row">
+          <section class="card v-table">
+            <div class="card-title"><i class="fa-solid fa-clipboard-check"></i> Resumen personal de ventas</div>
+            <div class="stats">
+              <div class="stats-row">
+                <span class="label">S1</span>
+                <span class="value">USD 12,000</span>
+              </div>
+              <div class="stats-row">
+                <span class="label">S2</span>
+                <span class="value">USD 14,000</span>
+              </div>
+              <div class="stats-row">
+                <span class="label">S3</span>
+                <span class="value">USD 10,000</span>
+              </div>
+              <div class="stats-row">
+                <span class="label">S4</span>
+                <span class="value">USD 15,000</span>
+              </div>
+              <div class="divider"></div>
+              <div class="stats-row total">
+                <span class="label">TOTAL</span>
+                <span class="value">USD 51,000</span>
+              </div>
             </div>
-            <div class="stats-row">
-              <span class="label">S2</span>
-              <span class="value">USD 14,000</span>
-            </div>
-            <div class="stats-row">
-              <span class="label">S3</span>
-              <span class="value">USD 10,000</span>
-            </div>
-            <div class="stats-row">
-              <span class="label">S4</span>
-              <span class="value">USD 15,000</span>
-            </div>
-            <div class="divider"></div>
-            <div class="stats-row total">
-              <span class="label">TOTAL</span>
-              <span class="value">USD 51,000</span>
-            </div>
-            <div class="stats-row meta">
-              <span class="label">Meta mensual</span>
-              <span class="value">USD 50,000</span>
-              <span class="badge ok"><i class="fa-solid fa-check"></i> Logro 102%</span>
-            </div>
-          </div>
-        </section>
+          </section>
 
-        <section class="card">
-          <div class="card-title"><i class="fa-solid fa-chart-bar"></i> Evolución semanal</div>
-          <div class="hbars">
-            <div class="hbar">
-              <span class="hlabel">S1</span>
-              <div class="htrack"><div class="hfill" style="width:80%"></div></div>
-              <span class="hvalue">12,000</span>
+          <section class="card chart-section">
+            <div class="card-title"><i class="fa-solid fa-chart-bar"></i> Evolución semanal</div>
+            <div class="chart-container">
+              <div class="chart-bars">
+                <div class="bar" style="height: 80%">
+                  <div class="bar-label">S1</div>
+                  <div class="bar-value">12,000</div>
+                </div>
+                <div class="bar" style="height: 93%">
+                  <div class="bar-label">S2</div>
+                  <div class="bar-value">14,000</div>
+                </div>
+                <div class="bar" style="height: 67%">
+                  <div class="bar-label">S3</div>
+                  <div class="bar-value">10,000</div>
+                </div>
+                <div class="bar" style="height: 100%">
+                  <div class="bar-label">S4</div>
+                  <div class="bar-value">15,000</div>
+                </div>
+              </div>
             </div>
-            <div class="hbar">
-              <span class="hlabel">S2</span>
-              <div class="htrack"><div class="hfill" style="width:93%"></div></div>
-              <span class="hvalue">14,000</span>
-            </div>
-            <div class="hbar">
-              <span class="hlabel">S3</span>
-              <div class="htrack"><div class="hfill" style="width:67%"></div></div>
-              <span class="hvalue">10,000</span>
-            </div>
-            <div class="hbar">
-              <span class="hlabel">S4</span>
-              <div class="htrack"><div class="hfill" style="width:100%"></div></div>
-              <span class="hvalue">15,000</span>
-            </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
     </main>
   </div>
 
-  <style>
+    <style>
     /* Overrides específicos del panel de vendedor (sin JS) */
-    .content.vendor{ max-width: 1100px; margin: 0 auto; padding: 24px 28px; }
-    .kpi-grid{ display:grid; grid-template-columns: repeat(3, minmax(260px,1fr)); gap:16px; margin-bottom:18px; }
-    @media (max-width: 1100px){ .kpi-grid{ grid-template-columns: repeat(2, minmax(260px,1fr)); } }
-    @media (max-width: 740px){ .kpi-grid{ grid-template-columns: 1fr; } }
+    .content.vendor{ max-width: 960px; margin: 0; padding: 24px 28px; }
+    .kpi-grid{ display:grid; grid-template-columns: repeat(2, minmax(280px,1fr)); gap:16px; margin-bottom:18px; }
+    @media (max-width: 900px){ .kpi-grid{ grid-template-columns: 1fr; } }
     .v-table .stats-row{ border-radius:8px; }
     .v-table .stats-row .value{ font-variant-numeric: tabular-nums; }
-    .hbars{ margin-top:6px; }
+    
+    /* Estilos para la gráfica de barras vertical */
+    .chart-container {
+      padding: 20px;
+      height: 300px;
+    }
+    .chart-bars {
+      height: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      padding: 0 40px;
+    }
+    .bar {
+      width: 60px;
+      background: #0066ff;
+      border-radius: 6px 6px 0 0;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .bar:hover {
+      background: #1a75ff;
+    }
+    .bar-label {
+      position: absolute;
+      bottom: -25px;
+      width: 100%;
+      text-align: center;
+      color: #808080;
+    }
+    .bar-value {
+      position: absolute;
+      top: -25px;
+      width: 100%;
+      text-align: center;
+      color: #808080;
+      font-variant-numeric: tabular-nums;
+    }
   </style>
 </body>
 </html>
