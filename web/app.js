@@ -31,6 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
         const { user } = data;
+        
+        // Guardar información del usuario en localStorage
+        localStorage.setItem('user', JSON.stringify({
+          userId: user.userId,
+          username: user.username,
+          role: user.role
+        }));
+        
         const role = (user.role || '').toLowerCase();
         if (role.includes('admin')) {
           window.location.href = 'admin.html';

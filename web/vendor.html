@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,8 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../estilos_otro_proyecto/dashboard.css" />
-  <link rel="stylesheet" href="../estilos_otro_proyecto/modular-components.css" />
   <link rel="stylesheet" href="admin.css" />
   <style>
     /* Layout principal */
@@ -262,8 +260,20 @@
 
     <main class="content vendor">
       <header class="topbar">
-        <div class="periodo">Resumen personal • OCTUBRE 2025 • Semana S4</div>
-        <div class="actions"></div>
+        <div class="periodo-header">
+          <div class="periodo">Resumen personal</div>
+          <select id="monthSelector" class="month-selector">
+            <option>Cargando meses...</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button id="themeToggle" class="btn ghost" title="Cambiar tema">
+            <i class="fa-solid fa-moon"></i><span>Modo</span>
+          </button>
+          <button id="btnReport" class="btn primary">
+            <i class="fa-solid fa-chart-pie"></i>Generar reporte
+          </button>
+        </div>
       </header>
 
       <div id="section-resumen">
@@ -382,5 +392,10 @@
       font-variant-numeric: tabular-nums;
     }
   </style>
+  <!-- Librería para generar PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="vendor.js" defer></script>
 </body>
 </html>

@@ -71,8 +71,14 @@ body{
 .btn.ghost:hover{ background:var(--table-hover); }
 .hidden{ display:none; }
 
-/* Floating theme toggle (top-right corner) */
-#themeToggle.floating-toggle{
+/* Theme toggle button */
+#themeToggle {
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+/* Si está fuera de .actions (flotante en esquina superior derecha) */
+#themeToggle.floating-toggle:not(.actions #themeToggle){
   position: fixed;
   top: 10px;
   right: 14px;
@@ -81,11 +87,14 @@ body{
   border-radius: 999px;
   line-height: 1;
 }
-#themeToggle.floating-toggle span{ display:none; }
-#themeToggle.floating-toggle i{ font-size: 14px; }
+#themeToggle.floating-toggle:not(.actions #themeToggle) span{ display:none; }
+#themeToggle.floating-toggle:not(.actions #themeToggle) i{ font-size: 14px; }
+
+/* Dentro de .actions, mantener estilo normal */
+.actions #themeToggle span { display: inline; }
 
 /* Grid KPIs */
-.grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; margin-bottom:24px; }
+.grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:20px; margin-bottom:24px; }
 .card{ background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:18px; box-shadow: 0 1px 2px rgba(0,0,0,.04); margin-bottom:22px; }
 .grid .card{ margin-bottom:0; }
 .metric .kpi-title{ color:var(--muted); font-weight:600; }
@@ -170,6 +179,43 @@ td.num{ text-align:right; }
 /* Actions under table */
 .table-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:22px; padding-top:14px; border-top:1px solid var(--border); }
 
+/* Selector de mes en el topbar */
+.periodo-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.month-selector {
+  min-width: 200px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.month-selector:hover {
+  border-color: var(--primary);
+  background: var(--panel);
+}
+
+.month-selector:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Fila de totales */
+#tablaVendedores tr.total-row {
+  border-top: 2px solid var(--border);
+  font-weight: 600;
+}
+
 /* Responsive */
 @media (max-width: 980px){
   .grid{ grid-template-columns: 1fr; }
@@ -177,19 +223,6 @@ td.num{ text-align:right; }
   .brand{ font-size:16px; }
   .item{ font-size:14px; }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #usuariosTable{ table-layout:fixed; }
 #usuariosTable thead th:nth-child(1){ width:32%; }
