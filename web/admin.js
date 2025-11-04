@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function money(n) {
-  return n.toLocaleString('es-PE', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  return 'Q' + n.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function drawBarFallback(canvas, labels, values) {
@@ -841,7 +841,7 @@ async function generarPDFReporte() {
     doc.text('Total Mensual', 25, yPos + 8);
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
-    doc.text(`USD ${dashboardData.totals.monthly.toLocaleString('es-PE')}`, 25, yPos + 18);
+    doc.text(`Q${dashboardData.totals.monthly.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 25, yPos + 18);
     
     // Caja 2: Promedio por Vendedor
     doc.setFillColor(5, 150, 105); // Verde
@@ -852,7 +852,7 @@ async function generarPDFReporte() {
     doc.text('Promedio por Vendedor', 35 + boxWidth, yPos + 8);
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
-    doc.text(`USD ${dashboardData.totals.perSellerAvg.toLocaleString('es-PE')}`, 35 + boxWidth, yPos + 18);
+    doc.text(`Q${dashboardData.totals.perSellerAvg.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 35 + boxWidth, yPos + 18);
     
     yPos += boxHeight + 15;
     
@@ -867,12 +867,12 @@ async function generarPDFReporte() {
     const tableData = dashboardData.performance.map((p, index) => {
       const row = [
         index === 0 ? '👑 ' + p.name : p.name,
-        `$${p.s1.toLocaleString('es-PE')}`,
-        `$${p.s2.toLocaleString('es-PE')}`,
-        `$${p.s3.toLocaleString('es-PE')}`,
-        `$${p.s4.toLocaleString('es-PE')}`,
-        `$${p.s5.toLocaleString('es-PE')}`,
-        `$${p.total.toLocaleString('es-PE')}`
+        `Q${p.s1.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+        `Q${p.s2.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+        `Q${p.s3.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+        `Q${p.s4.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+        `Q${p.s5.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+        `Q${p.total.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
       ];
       return row;
     });
@@ -889,12 +889,12 @@ async function generarPDFReporte() {
     
     tableData.push([
       'TOTAL INGRESOS',
-      `$${totals.s1.toLocaleString('es-PE')}`,
-      `$${totals.s2.toLocaleString('es-PE')}`,
-      `$${totals.s3.toLocaleString('es-PE')}`,
-      `$${totals.s4.toLocaleString('es-PE')}`,
-      `$${totals.s5.toLocaleString('es-PE')}`,
-      `$${totals.total.toLocaleString('es-PE')}`
+      `Q${totals.s1.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      `Q${totals.s2.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      `Q${totals.s3.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      `Q${totals.s4.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      `Q${totals.s5.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      `Q${totals.total.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
     ]);
     
     doc.autoTable({

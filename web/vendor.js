@@ -92,7 +92,7 @@ function updateKPICards(data) {
   // Total personal
   const totalPersonalValue = document.querySelector('.metrics-row .card:nth-child(2) .kpi-value');
   if (totalPersonalValue) {
-    totalPersonalValue.textContent = `USD ${data.totals.personal.toLocaleString('es-PE')}`;
+    totalPersonalValue.textContent = `Q${data.totals.personal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   }
 }
 
@@ -113,7 +113,7 @@ function updateWeeklySummary(data) {
     row.className = 'stats-row';
     row.innerHTML = `
       <span class="label">S${week.week}</span>
-      <span class="value">USD ${week.amount.toLocaleString('es-PE')}</span>
+      <span class="value">Q${week.amount.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
     `;
     statsContainer.appendChild(row);
   });
@@ -128,7 +128,7 @@ function updateWeeklySummary(data) {
   totalRow.className = 'stats-row total';
   totalRow.innerHTML = `
     <span class="label">TOTAL</span>
-    <span class="value">USD ${total.toLocaleString('es-PE')}</span>
+    <span class="value">Q${total.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
   `;
   statsContainer.appendChild(totalRow);
 }
@@ -347,7 +347,7 @@ async function generarPDFReporteVendedor() {
     doc.text('Total Personal del Mes', 25, yPos + 8);
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text(`USD ${vendorDashboardData.totals.personal.toLocaleString('es-PE')}`, 25, yPos + 18);
+    doc.text(`Q${vendorDashboardData.totals.personal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 25, yPos + 18);
     
     yPos += boxHeight + 15;
     
@@ -362,14 +362,14 @@ async function generarPDFReporteVendedor() {
     const tableData = vendorDashboardData.weeks.map(w => {
       return [
         `Semana ${w.week}`,
-        `USD ${w.amount.toLocaleString('es-PE')}`
+        `Q${w.amount.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
       ];
     });
     
     // Agregar fila de total
     tableData.push([
       'TOTAL',
-      `USD ${vendorDashboardData.totals.personal.toLocaleString('es-PE')}`
+      `Q${vendorDashboardData.totals.personal.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
     ]);
     
     doc.autoTable({
